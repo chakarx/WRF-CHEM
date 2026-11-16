@@ -3,7 +3,6 @@
 本文件是本案例唯一的完整执行入口，替代之前分散的运行流程。所有命令在服务器 Linux/Bash 中执行。
 案例为 **2013-05-01 00 UTC 至 2013-05-03 00 UTC，共 48 小时**；60/20 km 两域；
 CBM-Z/MOSAIC 四段含液相（chem_opt=9），使用 MIX 人为源、MEGAN 生物源、GOCART 扬尘、在线海盐和 MOZBC。
-完成一小时短测后，分别运行 ARI_on、ARI_off；两组使用同一批初始/边界和排放。
 
 ```text
 FNL + 地理静态数据
@@ -37,21 +36,11 @@ MEGAN 预处理 → wrfbiochemi_d01/d02；检查扬尘静态场
 | 物理 | YSU、Noah、Lin、Grell、RRTMG；时间步长 120 s，嵌套比例 3 |
 | 化学 | chem_opt=9；emiss_opt=3；emiss_inpt_opt=1；kemit 按实际层高自动确定 |
 | 自然源 | bio_emiss_opt=3、dust_opt=13、seas_opt=2；相应输入需实际检查 |
-| 气象 | 9 个 FNL 已在本机下载；上传服务器或用第 2 节命令下载/校验 |
 | MIX | v1.1 的 2010 年 5 月，40 个原始 nc，含 31 个 SAPRC99 VOC 文件；已在本机准备 |
 | MEGAN | 预处理器编译方法及运行命令见第 6 节；完整静态数据尚未在本工作区准备 |
-| 化学初边值 | 使用你已有的旧 MOZART 文件，提取同月日时并改日期；服务器实际文件仍须通过检查 |
-| 配对试验 | ARI_on/off 只改变 aer_ra_feedback；无观测同化 |
 
-论文使用 WRF 3.7.1，本地源码标注 3.9.1；清单基准年、五月模拟时段、精确网格位置和部分处理假设
-也未与论文完全一致。本次是参考论文主要设置的基准试验，不能标作论文所有配置的严格复现。
-旧 MOZART 改日期仍保留源年份浓度，不能称为真实 2013 年化学边界。
 
 ## 2. 上传新版文件、统一目录和环境
-
-新版脚本包内部只有一层 paper_case。先解压到临时目录，再将其中的文件更新到实际 CASE_FILES，
-不要在已有 paper_case 中反复解压。保留自己的旧输出和配置备份；不要上传 Windows 的 .venv。
-脚本包不包含体积较大的原始 MIX、FNL、MEGAN 或 MOZART 数据。
 
 建议数据布局如下；已有双层 paper_case 的情况由下方设置自动识别。
 
@@ -62,17 +51,12 @@ mix_emissions_201305/
 └── raw_mix_v1.1/2010/            40 个原始 nc
 ```
 
-在一个 Bash 会话设置以下变量；其中“实际路径”必须按服务器填写。若中途换终端，先重新设置。
-WPS_CASE 如已有本次合格结果，填写那个实际目录，不要无意创建另一套 WPS。
 
 ```bash
 export DATA_ROOT=/data1/share/elzd_2023_00080/xiaji/data/mix_emissions_201305
 export CASE_ROOT=/data1/share/elzd_2023_00080/xiaji/cases/wrfchem_20130501_03
 export CASE_FILES="$DATA_ROOT/paper_case"
-# 兼容你最近报错中实际存在的双层目录；两处都有脚本时，请手动指定更新后的那一处。
-if ! test -f "$CASE_FILES/emission_scheme.py"; then
-  export CASE_FILES="$DATA_ROOT/paper_case/paper_case"
-fi
+
 export MIX_DIR="$DATA_ROOT/raw_mix_v1.1/2010"
 export FNL_DIR="$DATA_ROOT/fnl_20130501_20130503"
 export WPS_CASE="$CASE_ROOT/WPS_case"
@@ -90,7 +74,6 @@ export ON_DIR="$CASE_ROOT/ARI_on"
 export OFF_DIR="$CASE_ROOT/ARI_off"
 export SMOKE_DIR="$CASE_ROOT/smoke_on"
 
-test -f "$CASE_FILES/emission_scheme.py" || { echo 'CASE_FILES 指错目录'; exit 1; }
 mkdir -p "$CASE_ROOT"
 source "$WRF_ENV"
 export OMP_NUM_THREADS=1
@@ -103,10 +86,8 @@ command -v ncdump
 command -v csh
 ```
 
-ldd 不能出现 not found；WRF/MPI/NetCDF 使用与编译时匹配的环境。
 下面各步骤的 WPS、MEGAN、MOZBC 命令在集群允许的计算节点执行。
 先修改 submit_case.slurm 中的分区、核数和必要的墙钟时间；示例为 bigmem、1 节点、24 MPI。
-不要直接使用原来固定 144 核且自动串联未知 MOZBC 配置的 m.RUN-WRFCHEM-spatial.sh。
 
 Python 使用已有的可用环境即可，不需要 f90nml。若没有环境，可创建：
 
@@ -119,21 +100,6 @@ python -c 'import numpy, netCDF4, scipy, pyproj, shapely; print("Python dependen
 python "$CASE_FILES/check_case.py"
 ```
 
-后续 source 编译环境若改变了 Python 路径，重新激活你的 Python 环境再运行预处理脚本。
-生产工具不使用 f90nml；不要因之前缺这个库而继续安装它。
-
-已有 FNL 时，下面命令会检查已有文件；缺少时从脚本记录的官方来源下载，预期 9 个：
-
-```bash
-python "$CASE_FILES/download_fnl.py" --namelist "$CASE_FILES/namelist.wps" --output "$FNL_DIR"
-find "$FNL_DIR" -maxdepth 1 -name 'fnl_201305*.grib2' -type f | wc -l
-```
-
-MIX 已上传完整 40 个 nc 可跳过下载；否则在有外网的服务器运行：
-
-```bash
-python "$CASE_FILES/download_mix.py" --year 2010 --voc SAPRC99 --output "$DATA_ROOT/raw_mix_v1.1"
-test -s "$MIX_DIR/MICS_Asia_SAPRC99_ALK1_2010_0.25x0.25.nc" || exit 1
 ```
 
 上述下载器的清单保留来源和校验记录。MEGAN 静态数据与 MOZART 化学场是另外两套数据，不包含在 MIX 中。
