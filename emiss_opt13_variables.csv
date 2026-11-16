@@ -1,0 +1,55 @@
+﻿registry_name,netcdf_variable,units_in_local_registry,description
+e_so2,E_SO2,mol km^-2 hr^-1,EMISSIONS
+e_c2h6,E_C2H6,mol km^-2 hr^-1,EMISSIONS C2H6
+e_c3h8,E_C3H8,mol km^-2 hr^-1,EMISSIONS C3H8
+e_c2h2,E_C2H2,mol km^-2 hr^-1,C2H2 emissions
+e_alk3,E_ALK3,mol km^-2 hr^-1,ALK3 emissions
+e_alk4,E_ALK4,mol km^-2 hr^-1,ALK4 emissions
+e_alk5,E_ALK5,mol km^-2 hr^-1,ALK5 emissions
+e_ethene,E_ETHENE,mol km^-2 hr^-1,ETHENE emissions
+e_c3h6,E_C3H6,mol km^-2 hr^-1,EMISSIONS C3H6
+e_ole1,E_OLE1,mol km^-2 hr^-1,OLE1 emissions
+e_ole2,E_OLE2,mol km^-2 hr^-1,OLE2 emissions
+e_aro1,E_ARO1,mol km^-2 hr^-1,ARO1 emissions
+e_aro2,E_ARO2,mol km^-2 hr^-1,ARO2 emissions
+e_hcho,E_HCHO,mol km^-2 hr^-1,EMISSIONS
+e_ccho,E_CCHO,mol km^-2 hr^-1,CCHO emissions
+e_rcho,E_RCHO,mol km^-2 hr^-1,RCHO emissions
+e_acet,E_ACET,mol km^-2 hr^-1,ACET emissions
+e_mek,E_MEK,mol km^-2 hr^-1,EMISSIONS MEK
+e_isoprene,E_ISOPRENE,mol km^-2 hr^-1,ISOPRENE emissions
+e_terp,E_TERP,mol km^-2 hr^-1,TERP emissions
+e_sesq,E_SESQ,mol km^-2 hr^-1,SESQUITERPENE emissions
+e_co,E_CO,mol km^-2 hr^-1,EMISSIONS
+e_no,E_NO,mol km^-2 hr^-1,EMISSIONS
+e_no2,E_NO2,mol km^-2 hr^-1,EMISSIONS NO2
+e_phen,E_PHEN,mol km^-2 hr^-1,PHEN emissions
+e_cres,E_CRES,mol km^-2 hr^-1,CRES emissions
+e_meoh,E_MEOH,mol km^-2 hr^-1,MEOH emissions
+e_gly,E_GLY,mol km^-2 hr^-1,GLY emissions
+e_mgly,E_MGLY,mol km^-2 hr^-1,MGLY emissions
+e_bacl,E_BACL,mol km^-2 hr^-1,BACL emissions
+e_isoprod,E_ISOPROD,mol km^-2 hr^-1,ISOPROD emissions
+e_methacro,E_METHACRO,mol km^-2 hr^-1,METHACRO emissions
+e_mvk,E_MVK,mol km^-2 hr^-1,MVK emissions
+e_prod2,E_PROD2,mol km^-2 hr^-1,PROD2 emissions
+e_ch4,E_CH4,mol km^-2 hr^-1,CH4 emissions
+e_bald,E_BALD,mol km^-2 hr^-1,BALD emissions
+e_hcooh,E_HCOOH,mol km^-2 hr^-1,HCOOH emissions
+e_cco_oh,E_CCO_OH,mol km^-2 hr^-1,CCO_OH emissions
+e_rco_oh,E_RCO_OH,mol km^-2 hr^-1,RCO_OH emissions
+e_nh3,E_NH3,mol km^-2 hr^-1,EMISSIONS
+e_pm25i,E_PM25I,ug/m3 m/s,EMISSION RATE OF UNIDEN. PM2.5 MASS
+e_pm25j,E_PM25J,ug/m3 m/s,EMISSION RATE OF J-MODE UNIDEN. PM2.5 MASS
+e_eci,E_ECI,ug/m3 m/s,EMISSION RATE OF I-MODE EC
+e_ecj,E_ECJ,ug/m3 m/s,EMISSION RATE OF J-MODE EC
+e_orgi,E_ORGI,ug/m3 m/s,EMISSION RATE OF I-MODE ORG. AER.
+e_orgj,E_ORGJ,ug/m3 m/s,EMISSION RATE OF J-MODE ORG. AER.
+e_so4i,E_SO4I,ug/m3 m/s,EMISSION RATE OF I-MODE ORG. AER.
+e_so4j,E_SO4J,ug/m3 m/s,EMISSION RATE OF J-MODE ORG. AER.
+e_no3i,E_NO3I,ug/m3 m/s,EMISSION RATE OF I-MODE ORG. AER.
+e_no3j,E_NO3J,ug/m3 m/s,EMISSION RATE OF J-MODE ORG. AER.
+e_orgi_a,E_ORGI_A,ug/m3 m/s,EMISSIONS ORGI_A AER
+e_orgj_a,E_ORGJ_A,ug/m3 m/s,EMISSIONS ORGJ_A AER
+e_orgi_bb,E_ORGI_BB,ug/m3 m/s,EMISSIONS ORGI_BB AER
+e_orgj_bb,E_ORGJ_BB,ug/m3 m/s,EMISSIONS ORGJ_BB AER
